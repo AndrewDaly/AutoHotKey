@@ -37,6 +37,8 @@ SetWorkingDir A_ScriptDir
 ~j & 1:: Send("{CTRL Down}{1}{CTRL Up}")
 ~j & 2:: Send("{CTRL Down}{2}{CTRL Up}")
 ~j & /:: Send("j")
+~j & ':: Send("j")
+
 ;~j & ':: Send("{Blind}{Right}")
 ;~j & `;:: Send("{Blind}{Left}")
 ;
