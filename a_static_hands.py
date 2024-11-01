@@ -41,11 +41,19 @@ while True:
     if keyboard.is_pressed('j') and keyboard.is_pressed('t'):
         j_t()
     if keyboard.is_pressed('j'):
-            keyboard.block_key('k')
-            if keyboard.is_pressed('k'):
-                j_k()
-
+        print('blocking k')
+        keyboard.block_key('k')
+        if keyboard.is_pressed('k'):
+            j_k()
     time.sleep(0.1)  # Short delay for efficient CPU usage
+    try:
+        keyboard.unblock_key('k')
+        print('k unblocked')
+    except KeyError:
+        pass
+
+
+
 #
 # #keyboard.add_hotkey('ctrl', toggle_logging)  # Toggle logging on/off
 # keyboard.add_hotkey('j', temp_test_function)
