@@ -38,6 +38,11 @@ def j_k():
 #
 # Main loop to detect the chord
 while True:
+    letters = 'abcdefghijklmnopqrstuvwxyz'
+    for i in letters:
+        keyboard.block_key(i)
+
+
     if keyboard.is_pressed('j') and keyboard.is_pressed('t'):
         j_t()
     if keyboard.is_pressed('j'):
