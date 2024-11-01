@@ -40,8 +40,10 @@ def j_k():
 while True:
     if keyboard.is_pressed('j') and keyboard.is_pressed('t'):
         j_t()
-    if keyboard.is_pressed('j') and keyboard.is_pressed('k'):
-        j_k()
+    if keyboard.is_pressed('j'):
+            keyboard.block_key('k')
+            if keyboard.is_pressed('k'):
+                j_k()
 
     time.sleep(0.1)  # Short delay for efficient CPU usage
 #
