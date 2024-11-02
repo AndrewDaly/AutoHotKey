@@ -33,9 +33,9 @@ def print_chord(letter):
     if letter == 'l':
         keyboard.send('ctrl+l')
     if letter == 'o':
-        keyboard.send('Pgup')
+        keyboard.send(keyboard.KEY_UP)
     if letter == 'p':
-        keyboard.send('Pgdn')
+        keyboard.send(keyboard.KEY_DOWN)
     if letter == 'n':
         keyboard.send('ctrl+n')
     if letter == 'r':
@@ -59,7 +59,7 @@ def on_j_press(event):
     for letter in last_other_press.keys():
         keyboard.block_key(letter)
     print("All other keys are blocked while 'j' is pressed")
-    time.sleep(0.1)
+    #time.sleep(0.1)
 
 # Function to handle 'j' key release
 def on_j_release(event):
@@ -75,8 +75,8 @@ def on_other_press(event):
     global last_other_press, last_j_press
     letter = event.name  # Get the letter pressed
 
+    current_letter_press = time.time()
     global last_not_j_press
-    last_not_j_press = time.time()
 
     if letter in last_other_press:
         last_other_press[letter] = time.time()  # Update the timestamp for the letter
@@ -85,9 +85,11 @@ def on_other_press(event):
         if last_other_press[letter] - last_j_press < TIME_THRESHOLD:
             print_chord(letter)  # Call function for j + letter chord
             return False
+
         # TODO: addin some error handling for the TypeError that sometimes occurs
-        if last_other_press[letter] - last_other_press < OTHER_KEY_THRESHOLD:
+        if current_letter_press - lacst_not_j_press < OTHER_KEY_THRESHOLD:
             keyboard.send(letter)
+    last_not_j_press = time.time()
     return True  # Suppress the letter from being sent to input
 
 # Hook 'j' key with its press and release handlers
