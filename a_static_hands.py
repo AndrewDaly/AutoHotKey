@@ -50,43 +50,42 @@ def j_f():
 
 #
 # Main loop to detect the chord
+
 while True:
     letters = 'abcdefghijklmnopqrstuvwxyz'
-    for i in letters:
-        keyboard.block_key(i)
+    if keyboard.is_pressed('j'):
+        for i in letters:
+            keyboard.block_key(i)
     # if keyboard.is_pressed('j') and keyboard.is_pressed('t'):
     #     j_t()
     if keyboard.is_pressed('j'):
-        print('blocking k')
         keyboard.block_key('k')
         if keyboard.is_pressed('k'):
             j_k()
-    if keyboard.is_pressed('i'):
-        print('blocking i')
+        keyboard.unblock_key('k')
+    if keyboard.is_pressed('j'):
         keyboard.block_key('i')
         if keyboard.is_pressed('i'):
             j_i()
-    if keyboard.is_pressed('d'):
-        print('blocking d')
+        keyboard.block_key('i')
+    if keyboard.is_pressed('j'):
         keyboard.block_key('d')
         if keyboard.is_pressed('d'):
             j_d()
-    if keyboard.is_pressed('f'):
-        print('blocking f')
+        keyboard.unblock_key('d')
+    if keyboard.is_pressed('j'):
         keyboard.block_key('f')
         if keyboard.is_pressed('f'):
             j_f()
-    time.sleep(0.1)
-    try:
-        keyboard.unblock_key('k')
-        keyboard.unblock_key('i')
-        keyboard.unblock_key('d')
         keyboard.unblock_key('f')
+    #time.sleep(0.1)
+    try:
+        for i in letters:
+            keyboard.unblock_key(i)
         #print('k unblocked')
     except KeyError:
         pass
-
-
+    time.sleep(0.1)
 
 #
 # #keyboard.add_hotkey('ctrl', toggle_logging)  # Toggle logging on/off
