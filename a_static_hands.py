@@ -34,6 +34,19 @@ def j_k():
     print('jk chord')
     keyboard.press_and_release('down')
 
+def j_i():
+    print('ji chord')
+    keyboard.press_and_release('up')
+
+def j_d():
+    print('jd chord')
+    keyboard.press_and_release('left')
+
+def j_f():
+    print('jf chord')
+    keyboard.press_and_release('right')
+
+
 
 #
 # Main loop to detect the chord
@@ -41,19 +54,35 @@ while True:
     letters = 'abcdefghijklmnopqrstuvwxyz'
     for i in letters:
         keyboard.block_key(i)
-
-
-    if keyboard.is_pressed('j') and keyboard.is_pressed('t'):
-        j_t()
+    # if keyboard.is_pressed('j') and keyboard.is_pressed('t'):
+    #     j_t()
     if keyboard.is_pressed('j'):
         print('blocking k')
         keyboard.block_key('k')
         if keyboard.is_pressed('k'):
             j_k()
-    time.sleep(0.1)  # Short delay for efficient CPU usage
+    if keyboard.is_pressed('i'):
+        print('blocking i')
+        keyboard.block_key('i')
+        if keyboard.is_pressed('i'):
+            j_i()
+    if keyboard.is_pressed('d'):
+        print('blocking d')
+        keyboard.block_key('d')
+        if keyboard.is_pressed('d'):
+            j_d()
+    if keyboard.is_pressed('f'):
+        print('blocking f')
+        keyboard.block_key('f')
+        if keyboard.is_pressed('f'):
+            j_f()
+    time.sleep(0.1)
     try:
         keyboard.unblock_key('k')
-        print('k unblocked')
+        keyboard.unblock_key('i')
+        keyboard.unblock_key('d')
+        keyboard.unblock_key('f')
+        #print('k unblocked')
     except KeyError:
         pass
 
