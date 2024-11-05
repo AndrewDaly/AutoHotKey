@@ -14,13 +14,40 @@ last_pressed = {}
 for i in last_pressed:
     last_pressed.update({i: 0})
 
-def update_keys(e):
-    print('letter pressed: ' + str(e.name))
-    current_time = time.time()
-    last_pressed.update({e.name: current_time})
-    print(last_pressed.get(e.name))
+def j_a():
+    print('ja chord')
+    keyboard.press_and_release('ctrl+a')
 
-    if e.name == 'j':
+def j_t():
+    print("Chord 'j' + 't' detected!")  # Replace with your desired action
+    keyboard.press_and_release('ctrl+t')
+
+def j_k():
+    print('jk chord')
+    keyboard.press_and_release('down')
+
+def j_i():
+    print('ji chord')
+    keyboard.press_and_release('up')
+
+def j_d():
+    print('jd chord')
+    keyboard.press_and_release('left')
+
+def j_f():
+    print('jf chord')
+    keyboard.press_and_release('right')
+
+
+
+def update_keys(e):
+    letter = e.name
+    print('letter pressed: ' + str(letter))
+    current_time = time.time()
+    last_pressed.update({letter: current_time})
+    print(last_pressed.get(letter))
+
+    if letter == 'j':
         print('j press detected')
         return False
 
@@ -29,12 +56,20 @@ def update_keys(e):
     try:
         if current_time - last_j_press < THRESHOLD:
             print('we are within threshold')
-    except TypeError: #check against type errors when j has not been pressed yetj
+            if letter == 'a':
+                j_a()
+            if letter == 'i':
+                j_i()
+                return False
+            if letter == 'k':
+                j_k()
+                return False
+    except TypeError: #check against type errors when j has not been pressed yet
         pass
 def on_j_press(e):
     print('ooook')
     last_pressed.update({'j': time.time()})
 
-keyboard.on_press(update_keys)
+keyboard.on_press(update_keys, suppress=True)
 keyboard.on_press_key('j',on_j_press, suppress=True)
 keyboard.wait('esc')
