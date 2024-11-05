@@ -1,7 +1,7 @@
 import keyboard
 import time
 
-THRESHOLD = 0.9
+THRESHOLD = 0.3
 
 # for each letter assign a boolean for is_pressed
 keys = {}
@@ -67,6 +67,9 @@ def j_t():
 def j_s():
     print('js')
     keyboard.press_and_release('ctrl+s')
+def j_w():
+    print('jw')
+    keyboard.press_and_release('ctrl+w')
 def j_z():
     print('jz')
     keyboard.press_and_release('ctrl+z')
@@ -157,6 +160,8 @@ def update_keys(e):
             if letter == 't':
                 j_t()
                 return False
+            if letter == 'w':
+                j_w()
             if letter == 'z':
                 j_z()
                 return False
