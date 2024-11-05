@@ -15,10 +15,14 @@ def j_k_chord():
 def on_j_press(event):
     global last_j_press, last_k_press
 
+    letters = 'abcdefghijklmnopqrstuvwxyz'
+    for i in letters:
+        keyboard.block_key(i)
+
     print('last j press: ' + str(last_j_press))
     # Block 'k' key while 'j' is pressed
-    keyboard.block_key('k')
-    print("'k' is blocked")
+    # keyboard.block_key('k')
+    # print("'k' is blocked")
 
     # Check if 'k' was pressed recently within the threshold
     if last_j_press - last_k_press < TIME_THRESHOLD:
@@ -27,8 +31,9 @@ def on_j_press(event):
             last_k_press = 0
             last_j_press = 0
     try:
-        keyboard.unblock_key('k')
-    except ValueError:
+        for i in letters:
+            keyboard.unblock_key(i)
+    except KeyError:
         pass
     last_j_press = time.time()  # Update 'j' press timestamp
     return False
@@ -46,6 +51,10 @@ def on_k_press(event):
     global last_k_press, last_j_press
     last_k_press = time.time()  # Update 'k' press timestamp
     print('last k press: ' + str(last_k_press))
+    try:
+        keyboard.unblock_key('k')
+    except KeyError:
+        pass
     # # Check if 'j' was pressed recently within the threshold
     # if last_k_press - last_j_press < TIME_THRESHOLD:
     #     j_k_chord()
@@ -55,7 +64,7 @@ def on_k_press(event):
 
 # Hook 'j' and 'k' keys with their respective handlers and suppress them
 keyboard.hook_key('j', on_j_press, suppress=True)
-keyboard.hook_key('k', on_k_press, suppress=True)
+keyboard.hook_key('k', on_k_press, suppress=False)
 #keyboard.on_release_key('j', on_j_release)
 
 # Keep the program running
