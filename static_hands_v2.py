@@ -2,7 +2,7 @@ import keyboard
 import time
 
 # Define a threshold in seconds for detecting near-simultaneous key presses
-TIME_THRESHOLD = 0.2  # 200 milliseconds
+TIME_THRESHOLD = 1  # 200 milliseconds
 
 # Track the last time 'j' and 'k' were pressed
 last_j_press = time.time()
@@ -25,8 +25,9 @@ def on_j_press(event):
     # print("'k' is blocked")
 
     # Check if 'k' was pressed recently within the threshold
-    if last_j_press - last_k_press < TIME_THRESHOLD:
-        if last_j_press > last_k_press:
+    print('time between presses ' + str(last_k_press - last_j_press))
+    if last_k_press - last_j_press < 0.5:
+        if last_k_press - last_j_press > 0:
             j_k_chord()
             last_k_press = 0
             last_j_press = 0
@@ -63,9 +64,10 @@ def on_k_press(event):
 
 
 # Hook 'j' and 'k' keys with their respective handlers and suppress them
-keyboard.hook_key('j', on_j_press, suppress=True)
-keyboard.hook_key('k', on_k_press, suppress=False)
+keyboard.on_press_key('j', on_j_press, suppress=True)
+keyboard.on_press_key('k', on_k_press, suppress=False)
 #keyboard.on_release_key('j', on_j_release)
+#keyboard.add_hotkey('j+k', j_k_chord(), suppress=True, timeout=3)
 
-# Keep the program running
+# Keep the program runningjj
 keyboard.wait('esc')  # Program ends when 'Esc' is pressed
