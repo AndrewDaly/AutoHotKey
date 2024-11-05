@@ -66,6 +66,7 @@ def update_keys(e):
                 return False
     except TypeError: #check against type errors when j has not been pressed yet
         pass
+    return True
 def on_j_press(e):
     print('ooook')
     last_pressed.update({'j': time.time()})
