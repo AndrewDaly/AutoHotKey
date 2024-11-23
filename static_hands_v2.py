@@ -2,7 +2,7 @@ import keyboard
 import time
 
 # Define a threshold in seconds for detecting near-simultaneous key presseskk
-TIME_THRESHOLD = 0.1  # 200 milliseconds
+TIME_THRESHOLD = 1
 
 # Track the last time 'j' and 'k' were pressed
 last_j_press = time.time()
@@ -10,28 +10,31 @@ last_k_press = time.time()
 
 def j_k_chord():
     print("jk chord detected")
+    keyboard.press_and_release('down')
 
 # Function to handle 'j' key press
 def on_j_press(event):
     global last_j_press, last_k_press
+    print('previous_j_press :' + str(last_j_press))
+    last_j_press = time.time()
+    print('current j press :' + str(last_j_press))
     letters = 'abcdefghijklmnopqrstuvwxyz'
     for i in letters:
         keyboard.block_key(i)
-
-    print('last j press: ' + str(last_j_press))
     # Check if 'k' was pressed recently within the threshold
-    print('time between presses ' + str(last_k_press - last_j_press))
-    if last_k_press - last_j_press < TIME_THRESHOLD:
-        if last_k_press - last_j_press > 0:
+    difference = last_k_press - last_j_press
+    print('time between presses ' + str(difference))
+    if difference < TIME_THRESHOLD:
+        if last_k_press > last_j_press:
             j_k_chord()
-            last_k_press = 0
-            last_j_press = 0
+            #last_k_press = 0
+            #last_j_press = 0
     try:
         for i in letters:
             keyboard.unblock_key(i)
     except KeyError:
         pass
-    last_j_press = time.time()  # Update 'j' press timestamp
+    #last_j_press = time.time()  # Update 'j' press timestamp
     return False
 
 
