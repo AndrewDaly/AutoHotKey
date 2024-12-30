@@ -8,12 +8,22 @@ using namespace std;
 map<int, bool> keyState;         // Map to track key states dynamically
 bool J_Permissable = false;      // Flag to determine if 'J' should be sent to input
 
-bool isJPressed = false;  // Track if 'J' is pressed
-bool isKPressed = false;  // Track if 'K' is pressed
-bool isAPressed = false;  // Track if 'A' is pressed
-bool isIPressed = false;  // Track if 'I' is pressed
-bool isGPressed = false;  // Track if 'G' is pressed
-bool isFPressed = false;  // Track if 'F' is pressed
+bool isAPressed = false;  // Track if 'a' is pressed
+bool isCPressed = false;  // Track if 'c' is pressed
+bool isFPressed = false;  // Track if 'f' is pressed
+bool isGPressed = false;  // Track if 'g' is pressed
+bool isIPressed = false;  // Track if 'i' is pressed
+bool isJPressed = false;  // Track if 'j' is pressed
+bool isKPressed = false;  // Track if 'k' is pressed
+bool isLPressed = false;  // Track if 'l' is pressed
+bool isOPressed = false;  // Track if 'o' is pressed
+bool isPPressed = false;  // Track if 'p' is pressed
+bool isRPressed = false;  // Track if 'r' is pressed
+bool isSPressed = false;  // Track if 's' is pressed
+bool isTPressed = false;  // Track if 't' is pressed
+bool isVPressed = false;  // Track if 'v' is pressed
+bool isWPressed = false;  // Track if 'w' is pressed
+
 
 HANDLE pipe;  // Global pipe handle
 
@@ -35,11 +45,21 @@ void sendMessage(const char* message) {
 }
 
 // Functions for specific key combinations
-void simjk() { sendMessage("jk"); }
 void simja() { sendMessage("ja"); }
-void simji() { sendMessage("ji"); }
-void simjg() { sendMessage("jg"); }
+void simjc() { sendMessage("jc"); }
 void simjf() { sendMessage("jf"); }
+void simjg() { sendMessage("jg"); }
+void simji() { sendMessage("ji"); }
+void simjk() { sendMessage("jk"); }
+void simjl() { sendMessage("jl"); }
+void simjo() { sendMessage("jo"); }
+void simjp() { sendMessage("jp"); }
+void simjr() { sendMessage("jr"); }
+void simjs() { sendMessage("js"); }
+void simjt() { sendMessage("jt"); }
+void simjv() { sendMessage("jv"); }
+void simjw() { sendMessage("jw"); }
+
 
 // Keyboard hook procedure
 LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
@@ -48,6 +68,29 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
 
         if (wParam == WM_KEYDOWN) {
             switch (p->vkCode) {
+                case 0x41:  // 'A'
+                    isAPressed = true;
+                break;
+
+                case 0x43:  // 'C'
+                    isCPressed = true;
+                break;
+
+                case 0x46:  // 'F'
+                    isFPressed = true;
+                if (isJPressed) {
+                    J_Permissable = true;
+                }
+                break;
+
+                case 0x47:  // 'G'
+                    isGPressed = true;
+                break;
+
+                case 0x49:  // 'I'
+                    isIPressed = true;
+                break;
+
                 case 0x4A:  // 'J'
                     isJPressed = true;
                     cout << "'J' key pressed!" << endl;
@@ -57,31 +100,56 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
                     break;
                 case 0x4B:  // 'K'
                     isKPressed = true;
-                    break;
-                case 0x41:  // 'A'
-                    isAPressed = true;
-                    break;
-                case 0x49:  // 'I'
-                    isIPressed = true;
-                    break;
-                case 0x47:  // 'G'
-                    isGPressed = true;
-                    break;
-                case 0x46:  // 'F'
-                    isFPressed = true;
-                    if (isJPressed) {
-                        J_Permissable = true;
-                    }
-                    break;
+                break;
+
+                case 0x4c:  // 'L'
+                    isLPressed = true;
+                break;
+
+                case 0x4f:  // 'O'
+                    isOPressed = true;
+                break;
+
+                case 0x50:  // 'P'
+                    isOPressed = true;
+                break;
+
+                case 0x52: // 'R'
+                    isRPressed = true;
+                break;
+
+                case 0x53: // 'S'
+                    isSPressed = true;
+                break;
+
+                case 0x54:  // 'T'
+                    isTPressed = true;
+                break;
+
+                case 0x57:  // 'W'
+                    isWPressed = true;
+                break;
+
+                case 0x56:  // 'V'
+                    isVPressed = true;
+                break;
             }
 
             // Handle key combinations
-            if (isJPressed && isKPressed) { simjk(); isKPressed = false; return 1; }
             if (isJPressed && isAPressed) { simja(); isAPressed = false; return 1; }
-            if (isJPressed && isIPressed) { simji(); isIPressed = false; return 1; }
-            if (isJPressed && isGPressed) { simjg(); isGPressed = false; return 1; }
+            if (isJPressed && isCPressed) { simjc(); isCPressed = false; return 1; }
             if (isJPressed && isFPressed) { simjf(); isFPressed = false; return 1; }
-
+            if (isJPressed && isGPressed) { simjg(); isGPressed = false; return 1; }
+            if (isJPressed && isIPressed) { simji(); isIPressed = false; return 1; }
+            if (isJPressed && isKPressed) { simjk(); isKPressed = false; return 1; }
+            if (isJPressed && isLPressed) { simjl(); isLPressed = false; return 1; }
+            if (isJPressed && isOPressed) { simjo(); isOPressed = false; return 1; }
+            if (isJPressed && isPPressed) { simjp(); isPPressed = false; return 1; }
+            if (isJPressed && isRPressed) { simjr(); isRPressed = false; return 1; }
+            if (isJPressed && isSPressed) { simjs(); isSPressed = false; return 1; }
+            if (isJPressed && isTPressed) { simjt(); isTPressed = false; return 1; }
+            if (isJPressed && isVPressed) { simjv(); isVPressed = false; return 1; }
+            if (isJPressed && isWPressed) { simjw(); isWPressed = false; return 1; }
         }
 
         if (wParam == WM_KEYUP) {
@@ -91,22 +159,63 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
                     J_Permissable = false;
                     cout << "'J' key released!" << endl;
                     break;
-                case 0x4B:  // 'K'
-                    isKPressed = false;
-                    break;
-                case 0x41:  // 'A'
-                    isAPressed = false;
-                    break;
-                case 0x49:  // 'I'
-                    isIPressed = false;
-                    break;
-                case 0x47:  // 'G'
-                    isGPressed = false;
-                    break;
+
                 case 0x46: // 'F'f
                     isFPressed = false;
                     J_Permissable = false;
                     break;
+
+                case 0x41:  // 'A'
+                    isAPressed = false;
+                break;
+
+                case 0x43:  // 'C'
+                    isCPressed = false;
+                break;
+
+                case 0x47:  // 'G'
+                    isGPressed = true;
+                break;
+
+                case 0x49:  // 'I'
+                    isIPressed = true;
+                break;
+
+                case 0x4B:  // 'K'
+                    isKPressed = false;
+                break;
+
+                case 0x4c:  // 'L'
+                    isLPressed = false;
+                break;
+
+                case 0x4f:  // 'O'
+                    isOPressed = false;
+                break;
+
+                case 0x50:  // 'P'
+                    isOPressed = false;
+                break;
+
+                case 0x52: // 'R'
+                    isRPressed = false;
+                break;
+
+                case 0x53: // 'S'
+                    isSPressed = false;
+                break;
+
+                case 0x54:  // 'T'
+                    isTPressed = false;
+                break;
+
+                case 0x57:  // 'W'
+                    isWPressed = false;
+                break;
+
+                case 0x56:  // 'V'
+                    isVPressed = false;
+                break;
             }
         }
     }

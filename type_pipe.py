@@ -23,6 +23,9 @@ def listen_for_hotkeys():
                     if 'jf' in message:
                         print('jf')
                         pyautogui.press('j')
+                    if 'jg' in message:
+                        print('jg')
+                        pyautogui.hotkey('alt', 'tab')
                     if 'ji' in message:
                         print('ji')
                         pyautogui.press('up')
@@ -47,6 +50,9 @@ def listen_for_hotkeys():
                     if 'jt' in message:
                         print('jt')
                         pyautogui.hotkey('ctrl', 't')
+                    if 'jv' in message:
+                        print('jv')
+                        pyautogui.hotkey('ctrl', 'v')
                     if 'jw' in message:
                         print('jw')
                         pyautogui.hotkey('ctrl', 'w')
