@@ -13,14 +13,15 @@ def create_transparent_fullscreen_window(coords):
     # Initialize the main window as the transparent background
     root = tk.Tk()
     root.attributes("-fullscreen", True)
-    root.attributes("-alpha", 0.01) # Set background transparency
-
+    root.attributes("-alpha", 0.5)
+    root.attributes("-topmost", True)
+    root.focus_force()
     # Create a toplevel window for fully opaque buttons
-    button_layer = tk.Toplevel(root)
-    button_layer.attributes("-fullscreen", True)
-    button_layer.attributes("-alpha", 0.4)
-    button_layer.attributes("topmost", True)
-    button_layer.title("controller_layer")
+    # button_layer = tk.Toplevel(root)
+    # button_layer.attributes("-fullscreen", True)
+    # button_layer.attributes("-alpha", 0.4)
+    # button_layer.attributes("-topmost", True)
+    # button_layer.title("controller_layer")
     #button_layer.focus_force()
 
     # Dictionary to store buttons by their labels
@@ -28,12 +29,12 @@ def create_transparent_fullscreen_window(coords):
 
     # Generate unique two-character labels
     letters = "abcdefghiklmnopqrstuvwxyz"
-    labels = ["".join(pair) for pair in itertools.product(letters, repeat=2)]
+    labels = ["".join(pair) for pair in itertools.product(letters, repeat=1)]
 
     # Iterate over each (x, y) coordinate pair and corresponding label
     for (x, y), label in zip(coords, labels):
-        # Create a 10x10 button with a unique two-character lable and yellow background
-        button = tk.Button(button_layer, text=label, width=2, height=1, bg="yellow")
+        # Create a 10x10 button with a unique two-character label and yellow background
+        button = tk.Button(root, text=label, width=2, height=1, bg="yellow")
 
         # Store the button in the dictionary with the label as the key
         buttons[label] = button
@@ -45,8 +46,9 @@ def create_transparent_fullscreen_window(coords):
     typed_keys = ""
 
     def on_key(event):
+        print("on key invoked " + str(event.char))
         nonlocal typed_keys
-        # Append the presseed key to the typed keys
+        # Append the pressed key to the typed keys
         typed_keys += event.char
 
         # Check if typed_keys matches any button label
@@ -68,11 +70,12 @@ def create_transparent_fullscreen_window(coords):
             # Reset typed keys
             typed_keys = ""
     # Bind key pressed to the button layer
-    button_layer.bind("<key>", on_key)
+    root.bind("<Key>", on_key)
 
     # Event binding for exiting fullscreen with ESC key
     root.bind("<Escape>", lambda e: root.destroy())
-    button_layer.bind("<Escape>", lambda e: root.destroy())
+    #button_layer.bind("<Escape>", lambda e: root.destroy())
+    root.focus_force()
     root.mainloop()
 
 coordinate_list = []
@@ -85,7 +88,8 @@ def list_all_children(control, level=0):
     rect = control.BoundingRectangle
     if rect:
         x, y = rect.left, rect.top
-        coordinates = f"Coordinates: ({x}, {y})"
+        print(f"Coordinates: ({x}, {y})")
+        coordinates = (x, y)
     else:
         coordinates = "Coordinates not available"
 
@@ -123,6 +127,29 @@ def super_cool(event):
     automation_thread.start()
     automation_thread.join()
 
+def automation_task_non_threaded():
+    # window = automation.WindowControl(searchDepth=1, Name="Downloads - File Explorer")
+    # if window.Exists(0, 0):
+    #     window.SetActive()
+    # else:
+    #     print("Window with the title downloads not found")
+
+    desktop = automation.GetRootControl()
+    for window in desktop.GetChildren():
+        print(f"Top-level window: {window.Name}")
+
+        # if window.ClassName == r'CabinetWClass' and pyautogui.getActiveWindowTitle() == window.Name:
+        #     print("List all children of File Explorer with coordinates")
+        #     current_window = pyautogui.getActiveWindowTitle()
+        #     list_all_children(window)
+        #     create_transparent_fullscreen_window(coordinate_list)
+        if window.Name == 'Downloads - File Explorer':
+            print("List all children of File Explorer with coordinates")
+            #current_window = pyautogui.getActiveWindowTitle()
+            list_all_children(window)
+            create_transparent_fullscreen_window(coordinate_list)
+
 if __name__ == '__main__':
-    keyboard.hook_key('Alt', super_cool, suppress=True)
-    keyboard.wait('esc')
+    # keyboard.hook_key('Alt', super_cool, suppress=True)
+    # keyboard.wait('esc')
+    automation_task_non_threaded()
