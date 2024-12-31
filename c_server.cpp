@@ -111,7 +111,7 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
                 break;
 
                 case 0x50:  // 'P'
-                    isOPressed = true;
+                    isPPressed = true;
                 break;
 
                 case 0x52: // 'R'
@@ -174,11 +174,11 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
                 break;
 
                 case 0x47:  // 'G'
-                    isGPressed = true;
+                    isGPressed = false;
                 break;
 
                 case 0x49:  // 'I'
-                    isIPressed = true;
+                    isIPressed = false;
                 break;
 
                 case 0x4B:  // 'K'

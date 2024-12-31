@@ -37,10 +37,10 @@ def listen_for_hotkeys():
                         pyautogui.hotkey('ctrl', 'l')
                     if 'jo' in message:
                         print('jo')
-                        pyautogui.press('ctrl','pgup')
+                        pyautogui.hotkey('ctrl','pgup')
                     if 'jp' in message:
                         print('jp')
-                        pyautogui.hotkey('ctrl','pgdwn')
+                        pyautogui.hotkey('ctrl','pgdn')
                     if 'jr' in message:
                         print('jr')
                         pyautogui.hotkey('ctrl', 'r')
