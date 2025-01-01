@@ -154,11 +154,17 @@ def automation_task_non_threaded():
         #     current_window = pyautogui.getActiveWindowTitle()
         #     list_all_children(window)
         #     create_transparent_fullscreen_window(coordinate_list)
-        if window.Name == 'Downloads - File Explorer':
-            print("List all children of File Explorer with coordinates")
-            #current_window = pyautogui.getActiveWindowTitle()
-            list_all_children(window)
-            create_transparent_fullscreen_window(coordinate_list)
+        # if window.Name == 'Downloads - File Explorer':
+        #     print("List all children of File Explorer with coordinates")
+        #     #current_window = pyautogui.getActiveWindowTitle()
+        #     list_all_children(window)
+        #     create_transparent_fullscreen_window(coordinate_list)
+
+        # if window.Name == 'google - Google Search - Google Chrome':
+        #     list_all_children(window)
+        #     create_transparent_fullscreen_window(coordinate_list)
+        list_all_children(window)
+        create_transparent_fullscreen_window(coordinate_list)
 
 if __name__ == '__main__':
     # keyboard.hook_key('Alt', super_cool, suppress=True)

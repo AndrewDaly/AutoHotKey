@@ -18,6 +18,7 @@ bool isKPressed = false;  // Track if 'k' is pressed
 bool isLPressed = false;  // Track if 'l' is pressed
 bool isOPressed = false;  // Track if 'o' is pressed
 bool isPPressed = false;  // Track if 'p' is pressed
+bool isQPressed = false;  // Track if 'q' is pressed
 bool isRPressed = false;  // Track if 'r' is pressed
 bool isSPressed = false;  // Track if 's' is pressed
 bool isTPressed = false;  // Track if 't' is pressed
@@ -59,6 +60,7 @@ void simjs() { sendMessage("js"); }
 void simjt() { sendMessage("jt"); }
 void simjv() { sendMessage("jv"); }
 void simjw() { sendMessage("jw"); }
+void simjq() { sendMessage("jq"); }
 
 
 // Keyboard hook procedure
@@ -114,6 +116,10 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
                     isPPressed = true;
                 break;
 
+                case 0x51: // 'Q'
+                    isQPressed = true;
+                break;
+
                 case 0x52: // 'R'
                     isRPressed = true;
                 break;
@@ -150,6 +156,7 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
             if (isJPressed && isTPressed) { simjt(); isTPressed = false; return 1; }
             if (isJPressed && isVPressed) { simjv(); isVPressed = false; return 1; }
             if (isJPressed && isWPressed) { simjw(); isWPressed = false; return 1; }
+            if (isJPressed && isQPressed) { simjq(); isQPressed = false; return 1; }
         }
 
         if (wParam == WM_KEYUP) {
@@ -195,6 +202,10 @@ LRESULT CALLBACK KeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
 
                 case 0x50:  // 'P'
                     isPPressed = false;
+                break;
+
+                case 0x51: // 'Q'
+                    isQPressed = false;
                 break;
 
                 case 0x52: // 'R'
