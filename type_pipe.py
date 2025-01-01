@@ -95,7 +95,8 @@ def list_all_children(control, level=0):
         coordinates = "Coordinates not available"
 
     print(f"Control Name: {control.Name}, Control Type: {control.ControlTypeName}, {coordinates}")
-    coordinate_list.append(coordinates)
+    if control.ControlTypeName != 'EditControl':
+        coordinate_list.append(coordinates)
 
     children = control.GetChildren()
     for child in children:
