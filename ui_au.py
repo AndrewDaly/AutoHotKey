@@ -29,7 +29,7 @@ def create_transparent_fullscreen_window(coords):
 
     # Generate unique two-character labels
     letters = "abcdefghiklmnopqrstuvwxyz"
-    labels = ["".join(pair) for pair in itertools.product(letters, repeat=1)]
+    labels = ["".join(pair) for pair in itertools.product(letters, repeat=2)]
 
     # Iterate over each (x, y) coordinate pair and corresponding label
     for (x, y), label in zip(coords, labels):
@@ -57,11 +57,11 @@ def create_transparent_fullscreen_window(coords):
             print(f"Button ' {typed_keys}' clicked")
             bt = buttons[typed_keys]
             x_coord = bt.winfo_x() + 40
-            y_coord = bt.winfo() + 20
+            y_coord = bt.winfo_y() + 20
             print(x_coord)
             print(y_coord)
             root.destroy()
-
+            pyautogui.moveTo(x_coord, y_coord)
             pyautogui.doubleClick(x_coord, y_coord)
             # Reset typed keys after a match
             typed_keys = ""
@@ -88,14 +88,25 @@ def list_all_children(control, level=0):
     rect = control.BoundingRectangle
     if rect:
         x, y = rect.left, rect.top
-        print(f"Coordinates: ({x}, {y})")
+        #print(f"Coordinates: ({x}, {y})")
         coordinates = (x, y)
     else:
         coordinates = "Coordinates not available"
 
-    if control.ControlTypeName == 'ListItemControl' or control.ControlTypeName == 'MenuItemControl':
-        print(f"{indent}Control Name: {control.Name}, Control Type: {control.ControlTypeName}, {coordinates}")
-        coordinate_list.append(coordinates)
+    #if control.ControlTypeName == 'TabItemControl':
+    #if control.ControlTypeName == 'TabControl':
+    #print(control.ControlTypeName)
+    #if control.ControlTypeName == 'MenuItemControl':
+    #if control.ControlTypeName == 'TextControl':
+    #if control.ControlTypeName == 'EditControl':
+    #if control.ControlTypeName:
+    #    print(control.ControlTypeName)
+
+    # ListItemControl
+
+    #if control.ControlTypeName == 'ListItemControl':# or control.ControlTypeName == 'MenuItemControl':
+    print(f"Control Name: {control.Name}, Control Type: {control.ControlTypeName}, {coordinates}")
+    coordinate_list.append(coordinates)
 
     children = control.GetChildren()
     for child in children:
