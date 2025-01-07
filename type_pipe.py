@@ -112,6 +112,8 @@ def automation_task_non_threaded():
             list_all_children(window)
             create_transparent_fullscreen_window(coordinate_list)
 
+    coordinate_list.clear()
+
 
 def listen_for_hotkeys():
     while True:
